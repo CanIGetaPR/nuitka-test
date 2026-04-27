@@ -41,6 +41,9 @@ jobs:
       - name: nuitka --version
         run: |
           uv run -m nuitka --version
+      - name: Try Build System
+        run: |
+          uv run -m build --no-isolation --skip-dependency-check
       - name: Build binary
         id: build-binary
         continue-on-error: true
