@@ -37,18 +37,18 @@ jobs:
           python -m pip install "uv==0.11.7"
       - name: Setup venv
         run: |
-          uv --no-progress venv --python 3.13
+          uv venv --python 3.13
       - name: Install Nuitka
         run: |
-          uv --no-progress pip install "Nuitka[onefile] @ git+https://github.com/Nuitka/Nuitka.git@factory" "uv_build"
+          uv --no-progress add "Nuitka[onefile] @ git+https://github.com/Nuitka/Nuitka.git@factory" "uv_build"
       - name: nuitka --version
         run: |
-          uv --no-progress run -- nuitka --version
+          uv run -m nuitka --version
       - name: Build binary
         id: build-binary
         continue-on-error: true
         run: >
-          uv --no-progress run -- nuitka --project --mode=onefile --assume-yes-for-downloads --output-filename=cli${{ runner.os == 'Windows' && '.exe' || '.bin' }}
+          uv run -m nuitka --project --mode=onefile --assume-yes-for-downloads --output-filename=cli${{ runner.os == 'Windows' && '.exe' || '.bin' }}
       - name: Upload Nuitka crash report
         uses: actions/upload-artifact@v7.0.1
         with:
